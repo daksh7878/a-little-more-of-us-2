@@ -1,0 +1,95 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Little Question 🩷</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <main class="confirmation-page">
+        <div class="confirmation-card">
+
+            <p class="eyebrow">JUST ONE LITTLE THING</p>
+
+            <h1>Did you get a moment to revisit our memories? 🩷</h1>
+
+            <p class="confirmation-text">
+                Take your time. There's no rush, and you don't have to
+                decide anything right now. I just wanted to share these
+                memories with you.PLEASEE feel them.
+            </p>
+
+            <div class="confirmation-buttons">
+                <button id="yesButton" class="main-button">
+                    Yes, I did 🩷
+                </button>
+
+                <button id="laterButton" class="secondary-button">
+                    Not yet
+                </button>
+            </div>
+
+            <div id="codeSection" class="hidden">
+                <p class="confirmation-text">
+                    Thank you for taking a moment. If you'd like to read
+                    what I wrote for you, enter the little code below. 🩷
+                </p>
+
+                <input
+                    type="text"
+                    id="secretCode"
+                    placeholder="Enter the code"
+                    autocomplete="off"
+                >
+
+                <button id="unlockButton" class="main-button">
+                    Unlock 🩷
+                </button>
+
+                <p id="errorMessage" role="status"></p>
+            </div>
+
+            <p id="laterMessage" class="hidden">
+                That's completely okay. Take all the time you need. 🩷
+                <br><br>
+                <a href="memories.html">Go back to the memories</a>
+            </p>
+
+        </div>
+    </main>
+
+    <script>
+        const yesButton = document.getElementById("yesButton");
+        const laterButton = document.getElementById("laterButton");
+        const codeSection = document.getElementById("codeSection");
+        const laterMessage = document.getElementById("laterMessage");
+        const unlockButton = document.getElementById("unlockButton");
+        const secretCode = document.getElementById("secretCode");
+        const errorMessage = document.getElementById("errorMessage");
+
+        yesButton.addEventListener("click", function () {
+            codeSection.classList.remove("hidden");
+            laterMessage.classList.add("hidden");
+            yesButton.classList.add("hidden");
+            laterButton.classList.add("hidden");
+        });
+
+        laterButton.addEventListener("click", function () {
+            laterMessage.classList.remove("hidden");
+            codeSection.classList.add("hidden");
+        });
+
+        unlockButton.addEventListener("click", function () {
+            if (secretCode.value.trim().toUpperCase() === "DK") {
+                window.location.href = "final.html";
+            } else {
+                errorMessage.textContent = "That code doesn't seem right. Try again 🩷";
+            }
+        });
+    </script>
+
+</body>
+</html>

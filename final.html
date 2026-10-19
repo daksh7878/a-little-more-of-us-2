@@ -1,0 +1,624 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For Pii 🩷</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;1,500&display=swap');
+
+:root {
+    --pink: #f6a9c5;
+    --deep-pink: #d75b87;
+    --burgundy: #731e3b;
+    --paper: #fff0d6;
+    --ink: #573443;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    overflow-x: hidden;
+    color: var(--ink);
+    font-family: 'Caveat', cursive;
+    background:
+        radial-gradient(ellipse at 50% 35%, #6c2949 0%, transparent 60%),
+        linear-gradient(145deg, #210e20, #45162f 55%, #170d1d);
+}
+
+button {
+    font: inherit;
+}
+
+.scene {
+    min-height: 100vh;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 45px 18px 70px;
+    isolation: isolate;
+}
+
+/* Floating pink hearts */
+.heart {
+    position: fixed;
+    z-index: -1;
+    color: #ff9dc4;
+    font-size: 30px;
+    opacity: .65;
+    pointer-events: none;
+    filter: drop-shadow(0 0 12px #fa6da055);
+    animation: floatHeart 7s ease-in-out infinite;
+}
+
+.heart:nth-child(1) { left: 7%; top: 14%; font-size: 35px; }
+.heart:nth-child(2) { right: 8%; top: 23%; font-size: 27px; animation-delay: -2s; }
+.heart:nth-child(3) { left: 12%; bottom: 15%; font-size: 23px; animation-delay: -4s; }
+.heart:nth-child(4) { right: 13%; bottom: 12%; font-size: 38px; animation-delay: -1s; }
+.heart:nth-child(5) { right: 45%; top: 6%; font-size: 20px; animation-delay: -3s; }
+
+@keyframes floatHeart {
+    0%, 100% { transform: translateY(0) rotate(-8deg); }
+    50% { transform: translateY(-22px) rotate(9deg); }
+}
+
+.intro {
+    position: absolute;
+    top: 20px;
+    left: 15px;
+    right: 15px;
+    text-align: center;
+    color: #ffe1ec;
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(13px, 2.5vw, 17px);
+    letter-spacing: 1px;
+}
+
+/* Scroll stage */
+.scroll-stage {
+    width: min(100%, 760px);
+    position: relative;
+    display: flex;
+    justify-content: center;
+    perspective: 1200px;
+    margin-top: 28px;
+}
+
+.scroll {
+    width: 100%;
+    position: relative;
+    border-radius: 7px;
+    background:
+        radial-gradient(ellipse at 15% 15%, #fff9e8aa, transparent 45%),
+        linear-gradient(100deg, #e7c69b, #fff0d6 15%, #f7e0bb 82%, #e1bc91);
+    box-shadow:
+        0 25px 70px #09030c99,
+        inset 0 0 24px #9c5e342c;
+    transform-origin: top center;
+    transition:
+        max-height 1.5s ease,
+        opacity .8s ease,
+        transform 1.2s ease;
+    overflow: hidden;
+}
+
+.scroll::before,
+.scroll::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 24px;
+    z-index: 2;
+    pointer-events: none;
+    background: linear-gradient(
+        to bottom,
+        #a56e4230,
+        transparent
+    );
+}
+
+.scroll::before { top: 0; }
+.scroll::after {
+    bottom: 0;
+    transform: rotate(180deg);
+}
+
+.letter {
+    padding: clamp(23px, 5vw, 48px);
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 1.1s ease .8s, transform 1.1s ease .8s;
+    font-size: clamp(18px, 2.5vw, 22px);
+    line-height: 1.43;
+}
+
+.letter h1 {
+    font-family: 'Playfair Display', serif;
+    font-weight: 500;
+    font-size: clamp(30px, 5vw, 42px);
+    color: #a7355d;
+    text-align: center;
+    margin: 0 0 25px;
+}
+
+.letter p {
+    margin: 0 0 18px;
+    white-space: normal;
+}
+
+.letter .signature {
+    margin-top: 26px;
+    text-align: right;
+    font-size: 29px;
+    color: #a7355d;
+}
+
+.letter .love-line {
+    text-align: center;
+    font-family: 'Playfair Display', serif;
+    color: #b43b67;
+    font-size: clamp(20px, 3.5vw, 28px);
+    margin: 25px 0;
+}
+
+.letter .bf-question {
+    text-align: center;
+    font-family: 'Playfair Display', serif;
+    color: #8c294f;
+    font-size: clamp(22px, 3.5vw, 29px);
+    margin: 25px 0;
+}
+
+/* Closed scroll ends */
+.scroll-ends {
+    position: absolute;
+    z-index: 4;
+    left: -10px;
+    right: -10px;
+    top: -15px;
+    height: 32px;
+    border-radius: 50%;
+    background: linear-gradient(#fff0d7, #d6ad80 45%, #f5d6ab 72%, #b7855e);
+    box-shadow: 0 5px 9px #180b1c77;
+    transition: opacity .5s ease;
+}
+
+.scroll-ends.bottom {
+    top: auto;
+    bottom: -15px;
+}
+
+.ribbon {
+    position: absolute;
+    z-index: 6;
+    left: 50%;
+    top: -18px;
+    bottom: -18px;
+    width: 44px;
+    transform: translateX(-50%);
+    background: linear-gradient(90deg, #5a102a, #9c284b 35%, #6d1734 75%, #4a1025);
+    box-shadow: 3px 0 8px #37102166;
+    transition: opacity .35s ease;
+}
+
+.ribbon::before,
+.ribbon::after {
+    content: "";
+    position: absolute;
+    left: -6px;
+    width: 56px;
+    height: 18px;
+    background: linear-gradient(#b64b6d, #701630);
+    border-radius: 4px;
+}
+
+.ribbon::before { top: 22%; }
+.ribbon::after { bottom: 22%; }
+
+/* Scissors control */
+.scissors {
+    position: absolute;
+    z-index: 10;
+    left: 50%;
+    top: 42%;
+    transform: translate(-50%, -50%);
+    font-family: sans-serif;
+    font-size: 48px;
+    cursor: grab;
+    touch-action: none;
+    user-select: none;
+    filter: drop-shadow(0 5px 4px #18030c88);
+    transition: filter .2s;
+}
+
+.scissors:active {
+    cursor: grabbing;
+    filter: drop-shadow(0 0 12px #ffbad4);
+}
+
+.hint {
+    position: absolute;
+    z-index: 8;
+    top: calc(42% + 43px);
+    left: 0;
+    right: 0;
+    text-align: center;
+    color: #fff0f5;
+    font-size: 22px;
+    text-shadow: 0 2px 6px #160512;
+    pointer-events: none;
+    transition: opacity .3s ease;
+}
+
+.instruction {
+    position: fixed;
+    z-index: 20;
+    bottom: 17px;
+    left: 12px;
+    right: 12px;
+    text-align: center;
+    color: #f8d9e5;
+    font-size: 18px;
+}
+
+/* Open state */
+.scene.open .ribbon,
+.scene.open .scissors,
+.scene.open .hint {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.scene.open .scroll-ends {
+    opacity: 0;
+}
+
+.scene.open .scroll {
+    overflow: hidden;
+    animation: unfurl 1.5s cubic-bezier(.2,.7,.2,1) forwards;
+}
+
+.scene.open .letter {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+@keyframes unfurl {
+    0% {
+        max-height: 190px;
+        transform: rotateX(-8deg) scaleY(.9);
+    }
+    55% {
+        max-height: 1500px;
+        transform: rotateX(0) scaleY(1.01);
+    }
+    100% {
+        max-height: 3000px;
+        transform: rotateX(0) scaleY(1);
+    }
+}
+
+/* Petal shower */
+.petal {
+    position: fixed;
+    z-index: 30;
+    top: -35px;
+    pointer-events: none;
+    animation: fall linear forwards;
+    filter: drop-shadow(0 2px 2px #6d173333);
+}
+
+@keyframes fall {
+    0% {
+        transform: translate3d(0, -5vh, 0) rotate(0deg);
+        opacity: 0;
+    }
+    10% { opacity: 1; }
+    100% {
+        transform: translate3d(var(--drift), 110vh, 0) rotate(650deg);
+        opacity: .2;
+    }
+}
+
+.open-again {
+    display: none;
+    margin: 25px auto 0;
+    padding: 12px 24px;
+    border: 1px solid #b54b70;
+    border-radius: 999px;
+    color: #8c294f;
+    background: #fff4e5;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.scene.open .open-again {
+    display: block;
+}
+
+@media (max-width: 480px) {
+    .scene {
+        padding: 65px 13px 75px;
+        align-items: flex-start;
+    }
+
+    .scroll-stage {
+        margin-top: 65px;
+    }
+
+    .letter {
+        padding: 27px 21px;
+        font-size: 19px;
+        line-height: 1.4;
+    }
+
+    .scissors { font-size: 43px; }
+}
+</style>
+</head>
+
+<body>
+<div class="scene" id="scene">
+
+    <span class="heart">🩷</span>
+    <span class="heart">🩷</span>
+    <span class="heart">🩷</span>
+    <span class="heart">🩷</span>
+    <span class="heart">🩷</span>
+
+    <div class="intro">A little something, made just for you 🩷</div>
+
+    <div class="scroll-stage">
+        <div class="scroll" id="scroll">
+
+            <div class="scroll-ends"></div>
+            <div class="scroll-ends bottom"></div>
+
+            <div class="ribbon" id="ribbon"></div>
+
+            <div class="letter" id="letter">
+
+                <!-- EDIT YOUR LETTER TEXT BELOW -->
+
+                <h1>Pii🩷</h1>
+
+                <p>
+                    Pii🩷, maine yeh letter 16 October ko likha tha, aur main chahta tha
+                    ki tujhe yeh tab doon jab main apni galtiyon ko sirf accept hi nahi,
+                    balki genuinely samajhne bhi lagun. Jab main apne actions ko teri
+                    nazar se dekh sakun aur samajh sakun ki meri kuch baaton aur
+                    expectations ne tujhe kaisa feel karwaya hoga. I know shayad mujhe
+                    yeh sab samajhne mein der lag gayi. Sirf sorry bolne se jo hua woh
+                    undo nahi ho sakta, but I genuinely want to learn from it.
+                </p>
+
+                <p>
+                    Maine yeh website humari memories ke liye banayi hai — Aarambh ka
+                    Treasure Hunt, cab rides, gym, café, freshers, woh hugs aur humari
+                    chhoti-chhoti baatein. Mere liye yeh sirf memories nahi hain, Pii.
+                    Yeh meri life ke woh moments hain jinhe main aaj bhi bohot pyaar
+                    se yaad karta hoon. 🩷
+                </p>
+
+                <p>
+                    Main yeh nahi bolunga ki main suddenly perfect ho gaya hoon.
+                    Main abhi bhi khud ko samajh raha hoon, but mujhe apni galtiyan
+                    pehle se zyada clearly dikhne lagi hain. Main kabhi controlling
+                    hua, tujhe judge kiya aur tujhe woh freedom aur peace nahi de paaya
+                    jo tujhe milni chahiye thi. I am genuinely sorry, Pii. Pyaar ka
+                    matlab kisi ko apne hisaab se rakhna nahi, balki usse apni
+                    individuality ke saath comfortable feel karwana hai. Main chahta
+                    hoon ki mere actions se tujhe yeh difference dikhe, sirf meri
+                    baaton se nahi.
+                </p>
+
+                <p>
+                    Meri phool si bandi, I still love you. Bohot zyada. Aur main sirf
+                    humara relationship miss nahi karta, main <em>tujhe</em> miss
+                    karta hoon. Mujhe achha lagta hai tujhse apni random baatein share
+                    karna, but main woh bhi miss karta hoon jab tu khud se apni baatein
+                    batati thi, apne din ke baare mein share karti thi aur chhoti si
+                    cheez bhi mujhe batane ka mann karta tha. Woh comfort, woh closeness,
+                    woh feeling ki hum ek doosre ki lives ka natural part hain. Main
+                    nahi chahta ki tu force karke kuch share kare; bas wish karta hoon
+                    ki kabhi dheere-dheere tera mann phir se kare. 🩷
+                </p>
+
+                <p>
+                    Pii, I know tune mujhe bataya hai ki tere feelings mere liye
+                    dheere-dheere khatam ho gaye hain, and I am not going to pretend
+                    ki tune aisa kabhi kaha hi nahi. Main teri baat seriously leta
+                    hoon. Shayad relationship mein na hone se tujhe ab zyada freedom,
+                    peace aur lightness feel hoti ho, aur main teri iss feeling ko
+                    galat nahi kehna chahta. Agar humare saath hote hue tujhe burdened
+                    ya restricted feel hua, toh mujhe samajhna chahiye ki aisa kyun
+                    hua. Main yeh bhi samajhta hoon ki care karne ka matlab relationship
+                    wali feelings hona zaroori nahi hai, but mere dil mein abhi bhi
+                    humare liye ek chhoti si hope hai.
+                </p>
+
+                <p>
+                    Mujhe lagta hai meri sabse badi galti yahi thi ki maine kabhi-kabhi
+                    tujhe apne hisaab se change karna chaha, jabki mujhe tujhe waise hi
+                    accept karna chahiye tha jaisi tu hai. I can't change what happened,
+                    but I can take responsibility for what I do from here. Main apni
+                    controlling tendencies aur apne behaviour ko genuinely improve
+                    karna chahta hoon — sirf tujhe wapas paane ke liye nahi, balki
+                    kyunki mujhe khud bhi better banna hai.
+                </p>
+
+                <p>
+                    Pii, agar tere dil mein bhi humare liye ek genuine chance dene ki
+                    willingness ho, toh can we please try once more, slowly, without
+                    pressure? Iss baar pehle jaisa nahi — main chahta hoon ki hum zyada
+                    understanding, trust, freedom aur space ke saath try karein. Main
+                    promise nahi karunga ki sab kuch overnight perfect ho jayega, but
+                    I genuinely want to do better. Main tujhe change karne ki jagah
+                    tujhe samajhna chahta hoon. Aur Mata Rani se bas yahi hope hai ki
+                    agar hum dono ke liye saath hona sahi hai, toh woh humare liye
+                    cheezein achhi karein. 🩷
+                </p>
+
+                <p>
+                    And haan, ek baat toh bolni hi hai —
+                    <em>I want my malkin back.</em> 😭🩷 Meri cute si, phool si bandi.
+                    But sabse pehle, main chahta hoon ki tu khush rahe aur mere saath
+                    kabhi khud ko lose na kare.
+                </p>
+
+                <p>
+                    Thank you for being such a special part of my life, Pii. Jo bhi
+                    aage ho, humne jo moments share kiye hain, woh mere liye hamesha
+                    special rahenge. Main unhe kabhi regret nahi karunga.
+                </p>
+
+                <p class="love-line">
+                    I LOVE YOU, PRIYANSHI SHARMA. 🩷
+                </p>
+
+                <p class="bf-question">Could I be your boyfriend? 🩷</p>
+
+                <p>
+                    Take your time, Pii. You don't owe me a yes just because I wrote
+                    all this or made this website. Main bas chahta tha ki tu meri
+                    feelings ek baar samajh sake. Jo bhi tera honest answer ho,
+                    main usse respect karne ki koshish karunga.
+                </p>
+
+                <p class="signature">Your DK 🩷</p>
+
+                <!-- END OF LETTER -->
+
+                <button class="open-again" id="petalsButton">
+                    More flowers for you 🩷
+                </button>
+
+            </div>
+        </div>
+
+        <div class="scissors" id="scissors"
+             role="button" tabindex="0"
+             aria-label="Drag scissors across the ribbon to cut it">✂️</div>
+
+        <div class="hint" id="hint">Drag the scissors across the ribbon 🩷</div>
+    </div>
+
+    <div class="instruction" id="instruction">
+        Made with love, just for Pii 🩷
+    </div>
+</div>
+
+<script>
+const scene = document.getElementById("scene");
+const scroll = document.getElementById("scroll");
+const scissors = document.getElementById("scissors");
+const ribbon = document.getElementById("ribbon");
+const hint = document.getElementById("hint");
+const instruction = document.getElementById("instruction");
+const petalsButton = document.getElementById("petalsButton");
+
+let dragging = false;
+let startX = 0;
+let startY = 0;
+let hasOpened = false;
+
+function positionScissors(x, y) {
+    const stage = document.querySelector(".scroll-stage");
+    const rect = stage.getBoundingClientRect();
+
+    scissors.style.left = (x - rect.left) + "px";
+    scissors.style.top = (y - rect.top) + "px";
+}
+
+scissors.addEventListener("pointerdown", (event) => {
+    if (hasOpened) return;
+
+    dragging = true;
+    startX = event.clientX;
+    startY = event.clientY;
+
+    scissors.setPointerCapture(event.pointerId);
+    event.preventDefault();
+});
+
+scissors.addEventListener("pointermove", (event) => {
+    if (!dragging || hasOpened) return;
+
+    positionScissors(event.clientX, event.clientY);
+
+    const distanceX = Math.abs(event.clientX - startX);
+    const distanceY = Math.abs(event.clientY - startY);
+
+    // A clear drag across the ribbon cuts it.
+    if (distanceX > 65 || distanceY > 85) {
+        dragging = false;
+        cutRibbon();
+    }
+});
+
+scissors.addEventListener("pointerup", () => {
+    dragging = false;
+});
+
+scissors.addEventListener("pointercancel", () => {
+    dragging = false;
+});
+
+scissors.addEventListener("keydown", (event) => {
+    if ((event.key === "Enter" || event.key === " ") && !hasOpened) {
+        event.preventDefault();
+        cutRibbon();
+    }
+});
+
+function cutRibbon() {
+    if (hasOpened) return;
+    hasOpened = true;
+
+    scene.classList.add("open");
+    ribbon.style.transform = "translateX(-50%) scaleX(0.1) rotate(10deg)";
+    ribbon.style.opacity = "0";
+    scissors.style.opacity = "0";
+    hint.style.opacity = "0";
+    instruction.textContent = "For you, Pii. Always with care. 🩷";
+
+    setTimeout(() => {
+        scroll.style.overflow = "visible";
+        makePetals(65);
+    }, 900);
+}
+
+function makePetals(amount) {
+    const flowers = ["🌸", "🌷", "🌺", "🩷", "🌸"];
+
+    for (let i = 0; i < amount; i++) {
+        const petal = document.createElement("span");
+        petal.className = "petal";
+        petal.textContent = flowers[Math.floor(Math.random() * flowers.length)];
+
+        petal.style.left = Math.random() * 100 + "vw";
+        petal.style.fontSize = (15 + Math.random() * 20) + "px";
+        petal.style.animationDuration = (4 + Math.random() * 5) + "s";
+        petal.style.animationDelay = (Math.random() * 2) + "s";
+        petal.style.setProperty("--drift", (Math.random() * 180 - 90) + "px");
+
+        document.body.appendChild(petal);
+
+        setTimeout(() => petal.remove(), 11000);
+    }
+}
+
+petalsButton.addEventListener("click", () => {
+    makePetals(35);
+});
+</script>
+</body>
+</html>
